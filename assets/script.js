@@ -22,7 +22,10 @@ const right = document.querySelector('.arrow_right');
 const bullet = document.querySelector('.dots');
 
 left.addEventListener('click', () => {
-	n = (n - 1) % slides.length;
+	n--;
+	if(n < 0) {
+		n = slides.length -1
+	}
 	carousel(n);
 
 	// Désélectionne le point précédent
@@ -39,7 +42,10 @@ left.addEventListener('click', () => {
 });
 
 right.addEventListener('click', () => {
-	n = (n + 1) % slides.length;
+	n++;
+	if(n >= slides.length) {
+		n = 0
+	}
 	carousel(n);
 
 	const prevDot = bullet.querySelector('.dot_selected');
@@ -70,13 +76,13 @@ createDot();
   
 
 const carousel = (n) => {
-	let createImg = '';
+	let createElement = '';
 	const banner = document.querySelector('#banner');
 
 	// Supprime les éléments HTML existants
 	const currentImg = banner.querySelector('.banner-img');
-	const currentTagLine = banner.querySelectorAll('.active')
-	console.log(currentTagLine);
+	const currentTagLine = banner.querySelectorAll('.active');
+
 	if (currentImg) {
 		currentImg.remove();
 	}
@@ -87,11 +93,11 @@ const carousel = (n) => {
 		});
 	}
 
-	createImg = `
+	createElement = `
 	  <img src ="assets/images/slideshow/${slides[n].image}" alt="slide" class="banner-img active">
 	  <p class="active">${slides[n].tagLine}</p>
 	`;
-	banner.insertAdjacentHTML('beforeend', createImg);
+	banner.insertAdjacentHTML('beforeend', createElement);
 };
 
 let n = 0;
